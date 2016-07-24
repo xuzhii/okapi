@@ -25,13 +25,19 @@ RUN dpkg --add-architecture i386 && \
     rm -rf /var/lib/apt/lists/* && \
     cp /usr/lib/jvm/java-1.6.0-openjdk-i386/include/jni.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include && \
     cp /usr/lib/jvm/java-1.6.0-openjdk-i386/include/jni_md.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include && \
-    mkdir -p /home/okapi
+    mkdir -p /home/okapi && \
+    mkdir -p /home/okapi/InputData && \
+    mkdir -p /home/okapi/SearchScripts
 
-ADD okapi /home/okapi/
+ADD okapi /home/okapi/  
+ADD InputData /home/okapi/InputData/  
+ADD SearchScripts /home/okapi/SearchScripts/
 
-Run  chmod 777 /home/okapi/bin/* && \
-     javac /home/okapi/javasrc/*.java -d /home/okapi/javabin && \
-     bin/bash /home/okapi/scripts/init.sh
+Run cp /home/okapi/InputData/*  /home/okapi/input && \
+    cp /home/okapi/SearchScripts/*  /home/okapi/scripts && \
+    chmod 777 /home/okapi/bin/* && \
+    javac /home/okapi/javasrc/*.java -d /home/okapi/javabin && \
+    bin/bash /home/okapi/scripts/init.sh
 
 # initialize okapi
 #ENTRYPOINT  ["/home/okapi/scripts/init.sh"]
