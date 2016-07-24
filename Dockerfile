@@ -7,7 +7,7 @@
 FROM ubuntu:14.04
 
 # File Author / Maintainer
-MAINTAINER Maintaner Tom Wu <tomoodesign@gmail.com>
+MAINTAINER Maintaner Zhi Xu <xuzhii@gmail.com>
 
 # Pre-requisite for compiling Okapi
 RUN dpkg --add-architecture i386 && \
@@ -27,10 +27,14 @@ RUN dpkg --add-architecture i386 && \
     cp /usr/lib/jvm/java-1.6.0-openjdk-i386/include/jni_md.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include && \
     mkdir -p /home/okapi
 
-ADD okapi/* /home/okapi/
+ADD okapi /home/okapi/
+
+Run  chmod 777 /home/okapi/bin/* && \
+     javac /home/okapi/javasrc/*.java -d /home/okapi/javabin && \
+     bin/bash /home/okapi/scripts/init.sh
 
 # initialize okapi
-ENTRYPOINT  ["/home/okapi/scripts/init.sh"]
+#ENTRYPOINT  ["/home/okapi/scripts/init.sh"]
 
 WORKDIR /home/okapi
 
